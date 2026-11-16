@@ -1,21 +1,14 @@
 import {
   BadgeCheck,
-  CarFront,
   Check,
-  CircleGauge,
-  Cog,
-  Disc3,
   HandCoins,
   PackageCheck,
   Quote,
-  ScanSearch,
-  Snowflake,
   Wrench,
-  Zap,
-  type LucideIcon,
 } from "lucide-react";
 import Reveal from "./Reveal";
-import { reasons, services, type Service } from "@/lib/data";
+import ServiceIcon from "./ServiceIcon";
+import { reasons, services } from "@/lib/data";
 import { site } from "@/lib/site";
 
 export function SectionHeading({
@@ -42,17 +35,6 @@ export function SectionHeading({
   );
 }
 
-const serviceIcons: Record<Service["icon"], LucideIcon> = {
-  diagnostics: ScanSearch,
-  engine: Cog,
-  transmission: CircleGauge,
-  suspension: CarFront,
-  electrical: Zap,
-  brakes: Disc3,
-  ac: Snowflake,
-  service: Wrench,
-};
-
 export function Services() {
   return (
     <section id="services" className="bg-white py-24">
@@ -63,20 +45,45 @@ export function Services() {
           text="Whatever your car needs, from a routine service to a full engine rebuild, it is handled by people who know these machines."
         />
         <div className="mt-14 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((service, i) => {
-            const Icon = serviceIcons[service.icon];
-            return (
-              <Reveal key={service.title} delay={(i % 4) * 0.08}>
-                <article className="group h-full rounded-3xl border border-ink/10 bg-white p-7 transition duration-300 hover:-translate-y-1.5 hover:border-brand-500/50 hover:shadow-2xl hover:shadow-brand-900/10">
-                  <span className="grid size-13 place-items-center rounded-2xl bg-brand-50 text-brand-600 transition duration-300 group-hover:bg-brand-600 group-hover:text-white">
-                    <Icon className="size-6" />
+          {services.map((service, i) => (
+            <Reveal key={service.title} delay={(i % 4) * 0.08}>
+              <article className="group relative h-full overflow-hidden rounded-3xl border border-ink/10 bg-white p-7 transition duration-500 hover:-translate-y-2 hover:border-brand-500/40 hover:shadow-[0_30px_60px_-30px_rgba(21,124,56,0.45)]">
+                {/* soft glow that fades in behind the icon */}
+                <span
+                  aria-hidden
+                  className="absolute -top-16 -left-16 size-48 rounded-full bg-brand-400/25 opacity-0 blur-3xl transition-opacity duration-500 group-hover:opacity-100"
+                />
+                <span
+                  aria-hidden
+                  className="absolute top-6 right-7 font-display text-4xl font-semibold text-ink/[0.06] transition-colors duration-500 group-hover:text-brand-500/25"
+                >
+                  {String(i + 1).padStart(2, "0")}
+                </span>
+
+                <span className="relative block size-16">
+                  {/* tilted layer behind the badge */}
+                  <span
+                    aria-hidden
+                    className="absolute inset-0 rotate-6 rounded-[1.35rem] bg-brand-200/70 transition-transform duration-500 group-hover:rotate-[14deg] group-hover:scale-105"
+                  />
+                  <span className="relative grid size-16 place-items-center rounded-[1.35rem] bg-gradient-to-br from-brand-400 via-brand-600 to-brand-900 text-white shadow-[0_14px_26px_-10px_rgba(21,124,56,0.75),inset_0_1px_0_rgba(255,255,255,0.35)] transition-transform duration-500 group-hover:-rotate-6 group-hover:scale-105">
+                    <span
+                      aria-hidden
+                      className="absolute inset-x-2 top-1.5 h-5 rounded-full bg-gradient-to-b from-white/30 to-transparent"
+                    />
+                    <ServiceIcon name={service.icon} className="relative size-8" />
                   </span>
-                  <h3 className="mt-5 font-display text-lg font-semibold">{service.title}</h3>
-                  <p className="mt-2.5 text-[15px] leading-relaxed text-ink/65">{service.text}</p>
-                </article>
-              </Reveal>
-            );
-          })}
+                </span>
+
+                <h3 className="relative mt-6 font-display text-lg font-semibold">{service.title}</h3>
+                <p className="relative mt-2.5 text-[15px] leading-relaxed text-ink/65">{service.text}</p>
+                <span
+                  aria-hidden
+                  className="absolute inset-x-7 bottom-0 h-1 origin-left scale-x-0 rounded-full bg-gradient-to-r from-brand-400 to-brand-700 transition-transform duration-500 group-hover:scale-x-100"
+                />
+              </article>
+            </Reveal>
+          ))}
         </div>
       </div>
     </section>
