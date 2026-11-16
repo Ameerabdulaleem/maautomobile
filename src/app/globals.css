@@ -18,7 +18,8 @@
   --color-ink-soft: #111a14;
   --color-mist: #f5f7f5;
 
-  --animate-marquee-full: marquee-full 45s linear infinite;
+  --animate-marquee-full: marquee-full 42s linear infinite;
+  --animate-marquee-reverse: marquee-full 48s linear infinite reverse;
   --animate-float: float 7s ease-in-out infinite;
   --animate-spin-slow: spin 14s linear infinite;
   --animate-dash: dash 1.2s linear infinite;
