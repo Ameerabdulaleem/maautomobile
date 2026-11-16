@@ -18,7 +18,7 @@ import {
 import CarArt from "./CarArt";
 import Reveal from "./Reveal";
 import { cars, reasons, services, type Service } from "@/lib/data";
-import { mailto, site } from "@/lib/site";
+import { site, whatsapp } from "@/lib/site";
 
 export function SectionHeading({
   eyebrow,
@@ -176,10 +176,11 @@ export function Cars() {
                   <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-6">
                     <p className="font-display text-sm font-semibold whitespace-nowrap text-ink">{car.price ?? "Price on request"}</p>
                     <a
-                      href={mailto(
-                        `Enquiry: ${car.make} ${car.model}`,
-                        `Hello ${site.name},\n\nI am interested in the ${car.make} ${car.model} listed on your website. Please send me the price, year, mileage and viewing details.\n\nMy name:\nMy phone number:\n`,
+                      href={whatsapp(
+                        `Hello ${site.name}, I am interested in the ${car.make} ${car.model} on your website. Please send me the price, year, mileage and viewing details.`,
                       )}
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="inline-flex items-center gap-1 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-600"
                     >
                       Enquire <ArrowUpRight className="size-4" />

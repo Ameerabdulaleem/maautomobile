@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import BrandCarousel from "@/components/BrandCarousel";
 import Faq from "@/components/Faq";
 import Process from "@/components/Process";
+import WhatsAppButton from "@/components/WhatsAppButton";
 import { Cars, Founder, Services, WhyUs } from "@/components/Sections";
 
 export default function Home() {
@@ -32,6 +33,7 @@ export default function Home() {
         <CallToAction />
       </main>
       <Footer />
+      <WhatsAppButton />
     </>
   );
 }

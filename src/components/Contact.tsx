@@ -1,10 +1,10 @@
 "use client";
 
-import { Building2, ExternalLink, Mail, MapPin, Navigation, Send } from "lucide-react";
+import { Building2, ExternalLink, Mail, MapPin, Navigation, Phone, Send } from "lucide-react";
 import { useState, type FormEvent } from "react";
 import Reveal from "./Reveal";
 import { services } from "@/lib/data";
-import { mailto, osmEmbedUrl, site } from "@/lib/site";
+import { mailto, osmEmbedUrl, site, whatsapp } from "@/lib/site";
 
 const field =
   "mt-1.5 w-full rounded-xl border border-ink/15 bg-white px-4 py-3 text-[15px] outline-none placeholder:text-ink/35 focus:border-brand-500 focus:ring-4 focus:ring-brand-500/15";
@@ -70,6 +70,25 @@ export default function Contact() {
                   className="mt-2 inline-flex items-center gap-1.5 text-sm font-semibold text-brand-700 hover:text-brand-600"
                 >
                   <Navigation className="size-4" /> Get directions
+                </a>
+              </div>
+            </li>
+            <li className="flex gap-4">
+              <span className="grid size-12 shrink-0 place-items-center rounded-2xl bg-brand-50 text-brand-600">
+                <Phone className="size-5" />
+              </span>
+              <div>
+                <p className="font-display font-semibold">Call or WhatsApp</p>
+                <a href={`tel:${site.phone.international}`} className="mt-0.5 block text-ink/65 hover:text-brand-700">
+                  {site.phone.display}
+                </a>
+                <a
+                  href={whatsapp()}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="mt-1 inline-block text-sm font-semibold text-brand-700 hover:text-brand-600"
+                >
+                  Message on WhatsApp
                 </a>
               </div>
             </li>

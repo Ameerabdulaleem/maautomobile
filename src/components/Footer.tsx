@@ -1,4 +1,4 @@
-import { ArrowRight, Mail, MapPin } from "lucide-react";
+import { ArrowRight, Mail, MapPin, Phone } from "lucide-react";
 import Image from "next/image";
 import Reveal from "./Reveal";
 import { navLinks, site } from "@/lib/site";
@@ -71,6 +71,12 @@ export default function Footer() {
             <li className="flex gap-3">
               <MapPin className="mt-0.5 size-5 shrink-0 text-brand-400" />
               <address className="leading-relaxed not-italic">{site.address.full}</address>
+            </li>
+            <li className="flex gap-3">
+              <Phone className="mt-0.5 size-5 shrink-0 text-brand-400" />
+              <a href={`tel:${site.phone.international}`} className="transition hover:text-brand-300">
+                {site.phone.display}
+              </a>
             </li>
             <li className="flex gap-3">
               <Mail className="mt-0.5 size-5 shrink-0 text-brand-400" />

@@ -64,7 +64,7 @@ function Tile({ brand, hidden }: { brand: Brand; hidden: boolean }) {
 
 export default function BrandCarousel() {
   return (
-    <section aria-labelledby="brands-title" className="overflow-hidden bg-mist py-16">
+    <section aria-labelledby="brands-title" className="overflow-hidden bg-mist pt-6 pb-16">
       <Reveal className="mx-auto max-w-7xl px-5 text-center lg:px-8">
         <p className="inline-flex items-center gap-4 text-sm font-medium text-ink/70">
           <span className="h-px w-12 bg-ink/40" /> Brands we look after

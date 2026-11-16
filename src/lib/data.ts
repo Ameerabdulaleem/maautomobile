@@ -170,6 +170,7 @@ export type Car = {
 export const cars: Car[] = [
   {
     id: "range-rover-sport",
+    image: "/cars/range-rover.jpg",
     make: "Range Rover",
     model: "Sport",
     body: "suv",
@@ -178,6 +179,7 @@ export const cars: Car[] = [
   },
   {
     id: "mercedes-gle",
+    image: "/cars/mercedes-gle.jpg",
     make: "Mercedes-Benz",
     model: "GLE",
     body: "suv",
@@ -186,6 +188,7 @@ export const cars: Car[] = [
   },
   {
     id: "mercedes-s-class",
+    image: "/cars/mercedes-s-class.jpg",
     make: "Mercedes-Benz",
     model: "S-Class",
     body: "sedan",
@@ -194,6 +197,7 @@ export const cars: Car[] = [
   },
   {
     id: "rolls-royce-ghost",
+    image: "/cars/rolls-royce-ghost.jpg",
     make: "Rolls-Royce",
     model: "Ghost",
     body: "sedan",

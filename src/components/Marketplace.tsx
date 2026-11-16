@@ -7,6 +7,7 @@ import {
   CircleGauge,
   Filter,
   Lightbulb,
+  MessageCircle,
   Plus,
   Search,
   Send,
@@ -19,7 +20,7 @@ import {
 import { useMemo, useState } from "react";
 import { SectionHeading } from "./Sections";
 import { parts, type PartCategory } from "@/lib/data";
-import { mailto, site } from "@/lib/site";
+import { mailto, site, whatsapp } from "@/lib/site";
 
 const categoryIcons: Record<PartCategory, LucideIcon> = {
   Filters: Filter,
@@ -58,12 +59,11 @@ export default function Marketplace() {
       return next;
     });
 
-  const enquiryLink = mailto(
-    "Parts enquiry from the website",
-    `Hello ${site.name},\n\nI would like the price and availability of these parts:\n\n${items
-      .map((p) => `- ${p.name} x ${basket[p.id]}`)
-      .join("\n")}\n\nMy car (make, model, year):\nMy name:\nMy phone number:\n`,
-  );
+  const enquiryText = `Hello ${site.name},\n\nI would like the price and availability of these parts:\n\n${items
+    .map((p) => `- ${p.name} x ${basket[p.id]}`)
+    .join("\n")}\n\nMy car (make, model, year):\nMy name:\n`;
+  const enquiryLink = mailto("Parts enquiry from the website", enquiryText);
+  const enquiryWhatsapp = whatsapp(enquiryText);
 
   return (
     <section id="marketplace" className="bg-white py-24">
@@ -189,7 +189,7 @@ export default function Marketplace() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 40 }}
-            className="fixed right-5 bottom-5 z-40 inline-flex items-center gap-2.5 rounded-full bg-ink px-5 py-3.5 font-semibold text-white shadow-2xl shadow-ink/40 ring-1 ring-white/15 hover:bg-brand-700"
+            className="fixed bottom-5 left-5 z-40 inline-flex items-center gap-2.5 rounded-full bg-ink px-5 py-3.5 font-semibold text-white shadow-2xl shadow-ink/40 ring-1 ring-white/15 hover:bg-brand-700"
           >
             <ShoppingBag className="size-5" />
             Enquiry list
@@ -272,13 +272,24 @@ export default function Marketplace() {
 
               <div className="border-t border-ink/10 px-6 py-5">
                 <p className="text-sm leading-relaxed text-ink/60">
-                  Sending opens your email app with the list filled in. We reply with prices and availability.
+                  Send your list on WhatsApp or by email. We reply with prices and availability.
                 </p>
                 <a
-                  href={items.length ? enquiryLink : undefined}
+                  href={items.length ? enquiryWhatsapp : undefined}
+                  target="_blank"
+                  rel="noopener noreferrer"
                   aria-disabled={!items.length}
                   className={`mt-4 flex items-center justify-center gap-2 rounded-full px-6 py-3.5 font-semibold text-white transition ${
                     items.length ? "bg-brand-600 hover:bg-brand-700" : "pointer-events-none bg-ink/30"
+                  }`}
+                >
+                  <MessageCircle className="size-4" /> Send on WhatsApp
+                </a>
+                <a
+                  href={items.length ? enquiryLink : undefined}
+                  aria-disabled={!items.length}
+                  className={`mt-3 flex items-center justify-center gap-2 rounded-full border px-6 py-3 font-semibold transition ${
+                    items.length ? "border-ink/20 text-ink hover:border-brand-600 hover:text-brand-700" : "pointer-events-none border-ink/10 text-ink/30"
                   }`}
                 >
                   <Send className="size-4" /> Send enquiry by email

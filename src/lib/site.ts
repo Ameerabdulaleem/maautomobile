@@ -3,6 +3,7 @@ export const site = {
   shortName: "MA Automobile",
   rc: "7394953",
   email: "muslimaleemautomobile@gmail.com",
+  phone: { display: "0803 096 2464", international: "+2348030962464", whatsapp: "2348030962464" },
   address: {
     line1: "No.6 Kez Udezue Street, Mabushi",
     line2: "After Artisan Palace",
@@ -49,4 +50,9 @@ export function osmEmbedUrl(): string {
   const bbox = [lon - dLon, lat - dLat, lon + dLon, lat + dLat].map((n) => n.toFixed(5)).join(",");
   const marker = pin ? `&marker=${lat.toFixed(5)},${lon.toFixed(5)}` : "";
   return `https://www.openstreetmap.org/export/embed.html?bbox=${encodeURIComponent(bbox)}&layer=mapnik${marker}`;
+}
+
+/** Builds a WhatsApp chat link with the message already typed in. */
+export function whatsapp(message = `Hello ${site.name}, I would like to make an enquiry.`): string {
+  return `https://wa.me/${site.phone.whatsapp}?text=${encodeURIComponent(message)}`;
 }

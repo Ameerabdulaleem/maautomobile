@@ -1,111 +1,173 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
-import { ArrowRight, BadgeCheck, MapPin, ShieldCheck, Wrench } from "lucide-react";
-import CarArt from "./CarArt";
-import { site } from "@/lib/site";
+import { ArrowLeft, ArrowRight } from "lucide-react";
+import Image from "next/image";
+import { useCallback, useEffect, useState } from "react";
+import { whatsapp } from "@/lib/site";
 
-const container = {
-  hidden: {},
-  show: { transition: { staggerChildren: 0.12, delayChildren: 0.1 } },
-};
+const slides = [
+  {
+    lead: "Drive With Certainty:",
+    before: "Trusted ",
+    accent: "Range Rover",
+    after: " Experts",
+    sub: "Specialist repairs and servicing for luxury cars in Mabushi, Abuja.",
+    image: "/hero/range-rover.jpg",
+    alt: "Black Range Rover Sport driving through a city street",
+    position: "object-[50%_62%]",
+  },
+  {
+    lead: "Fix It Right The First Time:",
+    before: "",
+    accent: "Mercedes-Benz",
+    after: " Care Made Easy",
+    sub: "Your car deserves more than trial and error mechanics.",
+    image: "/hero/mercedes-s-class.jpg",
+    alt: "Black Mercedes-Benz S-Class saloon",
+    position: "object-[50%_58%]",
+  },
+  {
+    lead: "Steer With Confidence:",
+    before: "",
+    accent: "Rolls-Royce",
+    after: " And Exotic Car Specialists",
+    sub: "Skilled hands, genuine parts and honest advice, all under one roof.",
+    image: "/hero/rolls-royce-ghost.jpg",
+    alt: "White Rolls-Royce Ghost parked in a city lane",
+    position: "object-[50%_70%]",
+  },
+] as const;
 
-const item = {
-  hidden: { opacity: 0, y: 26 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.7, ease: [0.21, 0.6, 0.35, 1] as const } },
-};
-
-const points = [
-  { icon: Wrench, label: "Specialist technicians" },
-  { icon: ShieldCheck, label: "Genuine quality parts" },
-  { icon: BadgeCheck, label: `CAC registered, RC ${site.rc}` },
-];
+const INTERVAL = 6000;
 
 export default function Hero() {
+  const [index, setIndex] = useState(0);
+  const [paused, setPaused] = useState(false);
   const reduce = useReducedMotion();
 
+  const go = useCallback((step: number) => setIndex((i) => (i + step + slides.length) % slides.length), []);
+
+  useEffect(() => {
+    if (paused || reduce) return;
+    const timer = setInterval(() => go(1), INTERVAL);
+    return () => clearInterval(timer);
+  }, [paused, reduce, go, index]);
+
   return (
-    <section id="top" className="relative overflow-hidden bg-ink pt-18 text-white">
-      <div className="bg-grid absolute inset-0" aria-hidden />
-      <div
-        aria-hidden
-        className="absolute -top-40 right-[-10%] size-[42rem] rounded-full bg-brand-500/25 blur-[140px]"
-      />
-      <div aria-hidden className="absolute bottom-[-30%] left-[-10%] size-[30rem] rounded-full bg-brand-700/30 blur-[120px]" />
+    <section
+      id="top"
+      aria-roledescription="carousel"
+      aria-label="Highlights"
+      className="relative overflow-hidden bg-gradient-to-b from-[#e9eeea] to-mist pt-18"
+      onMouseEnter={() => setPaused(true)}
+      onMouseLeave={() => setPaused(false)}
+    >
+      <div className="mx-auto max-w-7xl px-5 pt-9 lg:px-8 lg:pt-11">
+        {/* Every headline sits in the same grid cell, so the height never jumps between slides */}
+        <div className="grid">
+          {slides.map((slide, i) => {
+            const active = i === index;
+            return (
+              <motion.div
+                key={slide.accent}
+                aria-hidden={!active}
+                initial={false}
+                animate={{ opacity: active ? 1 : 0, y: active ? 0 : 24 }}
+                transition={{ duration: 0.7, ease: [0.21, 0.6, 0.35, 1] }}
+                className={`col-start-1 row-start-1 ${active ? "" : "pointer-events-none"}`}
+              >
+                <h1 className="max-w-4xl font-display text-4xl leading-[1.12] font-semibold tracking-tight text-ink sm:text-5xl lg:text-6xl">
+                  {slide.lead}
+                  <br />
+                  {slide.before}
+                  <span className="text-brand-600">{slide.accent}</span>
+                  {slide.after}
+                </h1>
+                <p className="mt-5 text-lg text-ink/65">{slide.sub}</p>
+              </motion.div>
+            );
+          })}
+        </div>
 
-      <div className="relative mx-auto grid max-w-7xl items-center gap-12 px-5 py-20 lg:grid-cols-[1.05fr_1fr] lg:px-8 lg:py-28">
-        <motion.div variants={container} initial={reduce ? "show" : "hidden"} animate="show">
-          <motion.p
-            variants={item}
-            className="inline-flex items-center gap-2 rounded-full border border-white/15 bg-white/5 px-4 py-1.5 text-xs font-medium tracking-wide text-brand-200"
+        <div className="mt-8 flex flex-wrap items-center gap-x-7 gap-y-4">
+          <a
+            href={whatsapp("Hello, I would like to speak with a service advisor about my car.")}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="group inline-flex items-center gap-2 rounded-full bg-brand-600 px-7 py-3.5 font-semibold text-white shadow-xl shadow-brand-600/25 transition hover:-translate-y-0.5 hover:bg-brand-700"
           >
-            <MapPin className="size-3.5" /> Mabushi, Abuja FCT
-          </motion.p>
-
-          <motion.h1
-            variants={item}
-            className="mt-6 font-display text-4xl leading-[1.08] font-semibold tracking-tight sm:text-5xl lg:text-6xl"
+            Chat With Service Advisor
+            <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
+          </a>
+          <a
+            href="#contact"
+            className="font-semibold text-ink underline decoration-brand-500 decoration-2 underline-offset-8 transition hover:text-brand-700"
           >
-            Expert care for <span className="text-brand-400">Range Rover</span>, Mercedes-Benz and Rolls-Royce.
-          </motion.h1>
+            Book An Inspection
+          </a>
+        </div>
+      </div>
 
-          <motion.p variants={item} className="mt-6 max-w-xl text-lg leading-relaxed text-white/70">
-            {site.name} is the workshop Abuja trusts with luxury and exotic cars. Precise diagnostics, proper repairs,
-            genuine parts and quality cars for sale, all under one roof.
-          </motion.p>
+      <div className="mx-auto mt-8 max-w-[92rem] px-3 pb-10 sm:px-5">
+        <div className="relative h-[19rem] overflow-hidden rounded-[2rem] bg-ink shadow-2xl shadow-ink/25 sm:h-[26rem] lg:h-[33rem]">
+          {slides.map((slide, i) => {
+            const active = i === index;
+            return (
+              <motion.div
+                key={slide.image}
+                aria-hidden={!active}
+                initial={false}
+                animate={{ opacity: active ? 1 : 0, scale: active && !reduce ? 1.08 : 1 }}
+                transition={{ opacity: { duration: 1 }, scale: { duration: active ? 7 : 1, ease: "linear" } }}
+                className="absolute inset-0"
+              >
+                <Image
+                  src={slide.image}
+                  alt={slide.alt}
+                  fill
+                  priority={i === 0}
+                  sizes="(min-width: 1500px) 1450px, 100vw"
+                  className={`object-cover ${slide.position}`}
+                />
+              </motion.div>
+            );
+          })}
+          <div className="absolute inset-0 bg-gradient-to-t from-ink/55 via-transparent to-transparent" aria-hidden />
 
-          <motion.div variants={item} className="mt-9 flex flex-wrap gap-4">
-            <a
-              href="#contact"
-              className="group inline-flex items-center gap-2 rounded-full bg-brand-500 px-7 py-3.5 font-semibold text-white shadow-xl shadow-brand-500/30 transition hover:-translate-y-0.5 hover:bg-brand-400"
+          <div className="absolute bottom-5 left-5 flex items-center gap-4 text-white sm:right-8 sm:bottom-7 sm:left-auto">
+            <button
+              type="button"
+              onClick={() => go(-1)}
+              aria-label="Previous slide"
+              className="grid size-10 place-items-center rounded-full border border-white/40 backdrop-blur transition hover:bg-white hover:text-ink"
             >
-              Book a Service
-              <ArrowRight className="size-4 transition-transform group-hover:translate-x-1" />
-            </a>
-            <a
-              href="#marketplace"
-              className="inline-flex items-center rounded-full border border-white/25 px-7 py-3.5 font-semibold text-white transition hover:border-white hover:bg-white hover:text-ink"
-            >
-              Shop Car Parts
-            </a>
-          </motion.div>
-
-          <motion.ul variants={item} className="mt-12 flex flex-wrap gap-x-8 gap-y-4">
-            {points.map(({ icon: Icon, label }) => (
-              <li key={label} className="flex items-center gap-2.5 text-sm text-white/80">
-                <span className="grid size-9 place-items-center rounded-full bg-brand-500/15 text-brand-300">
-                  <Icon className="size-4.5" />
-                </span>
-                {label}
-              </li>
-            ))}
-          </motion.ul>
-        </motion.div>
-
-        <motion.div
-          initial={reduce ? false : { opacity: 0, x: 80 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1, delay: 0.3, ease: [0.21, 0.6, 0.35, 1] }}
-          className="relative"
-        >
-          <div className="absolute inset-x-6 top-1/2 h-40 -translate-y-1/2 rounded-full bg-brand-500/30 blur-3xl" aria-hidden />
-          <div className="relative rounded-[2rem] border border-white/10 bg-gradient-to-b from-white/10 to-white/[0.02] p-6 backdrop-blur-sm sm:p-10">
-            <div className="animate-float">
-              <CarArt body="suv" color="#157c38" moving className="w-full drop-shadow-[0_25px_40px_rgba(0,0,0,0.55)]" />
-            </div>
-            <div className="mt-6 grid grid-cols-3 gap-3 text-center">
-              {["Repair", "Parts", "Sales"].map((label) => (
-                <a
-                  key={label}
-                  href={label === "Repair" ? "#services" : label === "Parts" ? "#marketplace" : "#cars"}
-                  className="rounded-2xl border border-white/10 bg-white/5 py-3 text-sm font-medium text-white/85 transition hover:border-brand-400/60 hover:bg-brand-500/15"
-                >
-                  {label}
-                </a>
+              <ArrowLeft className="size-4" />
+            </button>
+            <div className="flex items-center gap-2.5">
+              {slides.map((slide, i) => (
+                <button
+                  key={slide.accent}
+                  type="button"
+                  onClick={() => setIndex(i)}
+                  aria-label={`Show slide ${i + 1}: ${slide.accent}`}
+                  aria-current={i === index}
+                  className={`h-2 rounded-full transition-all duration-500 ${
+                    i === index ? "w-8 bg-brand-400" : "w-2 bg-white/60 hover:bg-white"
+                  }`}
+                />
               ))}
             </div>
+            <button
+              type="button"
+              onClick={() => go(1)}
+              aria-label="Next slide"
+              className="grid size-10 place-items-center rounded-full border border-white/40 backdrop-blur transition hover:bg-white hover:text-ink"
+            >
+              <ArrowRight className="size-4" />
+            </button>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

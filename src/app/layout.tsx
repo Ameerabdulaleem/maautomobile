@@ -54,6 +54,7 @@ const jsonLd = {
   logo: `${site.url}/logo.png`,
   image: `${site.url}/logo.png`,
   email: site.email,
+  telephone: site.phone.international,
   identifier: `RC ${site.rc}`,
   address: {
     "@type": "PostalAddress",
