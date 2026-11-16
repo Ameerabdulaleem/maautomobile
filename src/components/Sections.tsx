@@ -1,5 +1,4 @@
 import {
-  ArrowUpRight,
   BadgeCheck,
   CarFront,
   Check,
@@ -15,10 +14,9 @@ import {
   Zap,
   type LucideIcon,
 } from "lucide-react";
-import CarArt from "./CarArt";
 import Reveal from "./Reveal";
-import { cars, reasons, services, type Service } from "@/lib/data";
-import { site, whatsapp } from "@/lib/site";
+import { reasons, services, type Service } from "@/lib/data";
+import { site } from "@/lib/site";
 
 export function SectionHeading({
   eyebrow,
@@ -128,78 +126,6 @@ export function WhyUs() {
             );
           })}
         </div>
-      </div>
-    </section>
-  );
-}
-
-export function Cars() {
-  return (
-    <section id="cars" className="bg-white py-24">
-      <div className="mx-auto max-w-7xl px-5 lg:px-8">
-        <SectionHeading
-          eyebrow="Cars for sale"
-          title="Quality cars, checked by our own workshop"
-          text="Every car we offer has been inspected by the same technicians who repair them, so you know exactly what you are buying."
-        />
-        <div className="mt-14 grid gap-6 sm:grid-cols-2 lg:grid-cols-4">
-          {cars.map((car, i) => (
-            <Reveal key={car.id} delay={(i % 4) * 0.08}>
-              <article className="group flex h-full flex-col overflow-hidden rounded-3xl border border-ink/10 bg-white transition duration-300 hover:-translate-y-1.5 hover:shadow-2xl hover:shadow-brand-900/10">
-                <div className="relative grid aspect-[4/3] place-items-center overflow-hidden bg-gradient-to-br from-[#dfe9e2] via-[#f3f6f4] to-[#c9d8ce]">
-                  {car.image ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img src={car.image} alt={`${car.make} ${car.model}`} loading="lazy" className="size-full object-cover" />
-                  ) : (
-                    <CarArt
-                      body={car.body}
-                      color={car.color}
-                      className="w-[88%] transition-transform duration-500 group-hover:scale-105"
-                    />
-                  )}
-                  <span className="absolute top-4 left-4 rounded-full bg-ink/90 px-3 py-1 text-xs font-semibold text-white">
-                    Available
-                  </span>
-                </div>
-                <div className="flex flex-1 flex-col p-6">
-                  <p className="text-xs font-semibold tracking-[0.18em] text-brand-600 uppercase">{car.make}</p>
-                  <h3 className="mt-1 font-display text-xl font-semibold">
-                    {car.make} {car.model}
-                  </h3>
-                  <ul className="mt-4 flex flex-wrap gap-2">
-                    {car.highlights.map((h) => (
-                      <li key={h} className="rounded-full bg-mist px-3 py-1 text-xs font-medium text-ink/70">
-                        {h}
-                      </li>
-                    ))}
-                  </ul>
-                  <div className="mt-auto flex flex-wrap items-center justify-between gap-3 pt-6">
-                    <p className="font-display text-sm font-semibold whitespace-nowrap text-ink">{car.price ?? "Price on request"}</p>
-                    <a
-                      href={whatsapp(
-                        `Hello ${site.name}, I am interested in the ${car.make} ${car.model} on your website. Please send me the price, year, mileage and viewing details.`,
-                      )}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-1 rounded-full bg-ink px-4 py-2 text-sm font-semibold text-white transition hover:bg-brand-600"
-                    >
-                      Enquire <ArrowUpRight className="size-4" />
-                    </a>
-                  </div>
-                </div>
-              </article>
-            </Reveal>
-          ))}
-        </div>
-        <Reveal className="mt-10 text-center">
-          <p className="text-ink/65">
-            Looking for a particular model?{" "}
-            <a href="#contact" className="font-semibold text-brand-700 underline decoration-brand-300 underline-offset-4 hover:text-brand-600">
-              Tell us what you want
-            </a>{" "}
-            and we will help you source it.
-          </p>
-        </Reveal>
       </div>
     </section>
   );

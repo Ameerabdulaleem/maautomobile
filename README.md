@@ -19,7 +19,7 @@ Everything you are likely to change lives in two files:
 
 | What | Where |
 | --- | --- |
-| Parts in the marketplace, cars for sale, services, FAQ | `src/lib/data.ts` |
+| Cars for sale, parts and oils in the Market-Place, services, FAQ | `src/lib/data.ts` |
 | Company name, address, email | `src/lib/site.ts` |
 | Founder story and photo | `Founder` in `src/components/Sections.tsx` |
 

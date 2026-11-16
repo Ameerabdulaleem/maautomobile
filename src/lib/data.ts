@@ -90,7 +90,15 @@ export const reasons = [
   },
 ] as const;
 
-export type PartCategory = "Filters" | "Transmission" | "Lighting" | "Emblems" | "Wheel Accessories";
+export type PartCategory = "Oil Filters" | "Lubricants" | "Used Engines" | "Others";
+
+/** The picture tiles shown under "Car Parts & Oils". */
+export const partCategories: { name: PartCategory; image: string; blurb: string }[] = [
+  { name: "Oil Filters", image: "/parts/oil-filters.jpg", blurb: "Filters for clean oil and a healthy engine" },
+  { name: "Lubricants", image: "/parts/lubricants.jpg", blurb: "Engine oils, gearbox fluids and treatments" },
+  { name: "Used Engines", image: "/parts/used-engines.jpg", blurb: "Tested replacement engines for luxury cars" },
+  { name: "Others", image: "/parts/others.jpg", blurb: "Emblems, lights, valve caps and accessories" },
+];
 
 export type Part = {
   id: string;
@@ -100,50 +108,62 @@ export type Part = {
   description: string;
   /** Leave empty to show "Price on request". Example: "₦25,000" */
   price?: string;
-  /** Optional photo placed in /public/parts, for example "/parts/oil-filter.jpg" */
-  image?: string;
 };
 
 export const parts: Part[] = [
   {
     id: "oil-filter",
     name: "Oil Filter",
-    category: "Filters",
+    category: "Oil Filters",
     fits: "Mercedes-Benz, Range Rover and more",
     description: "Quality oil filters that keep your engine oil clean between services.",
   },
   {
+    id: "engine-oil",
+    name: "Engine Oil",
+    category: "Lubricants",
+    fits: "Petrol and diesel engines",
+    description: "Fully synthetic engine oils in the right grade for your car. Tell us your model and we will match it.",
+  },
+  {
     id: "transmission-anti-shake",
     name: "Automatic Transmission Anti-Shake",
-    category: "Transmission",
+    category: "Lubricants",
     fits: "Most automatic gearboxes",
     description: "Treatment for automatic gearboxes that helps reduce shudder and rough gear changes.",
   },
   {
+    id: "used-engine",
+    name: "Used Engine",
+    category: "Used Engines",
+    fits: "Mercedes-Benz, Range Rover and more",
+    description: "Replacement used engines sourced and checked by our workshop. Send us your car model and engine type.",
+  },
+  {
     id: "mercedes-welcome-light",
     name: "Mercedes-Benz Welcome Light",
-    category: "Lighting",
+    category: "Others",
     fits: "Mercedes-Benz",
     description: "Door courtesy lights that project the logo onto the ground when you open the door.",
   },
   {
     id: "mercedes-emblem",
     name: "Mercedes-Benz Emblem",
-    category: "Emblems",
+    category: "Others",
     fits: "Mercedes-Benz",
     description: "Replacement star emblems and badges to restore a faded or missing original.",
   },
   {
     id: "land-rover-valve-stem-cap",
     name: "Land Rover Valve Stem Cap",
-    category: "Wheel Accessories",
+    category: "Others",
     fits: "Land Rover and Range Rover",
     description: "Branded valve stem caps that protect the tyre valve and finish the wheel neatly.",
   },
   {
     id: "mercedes-valve-stem-caps",
     name: "Tire Valve Stem Caps Mercedes",
-    category: "Wheel Accessories",
+    category: "Others",
     fits: "Mercedes-Benz",
     description: "A set of Mercedes branded tyre valve caps that keep dust and moisture out.",
   },
@@ -153,57 +173,24 @@ export type Car = {
   id: string;
   make: string;
   model: string;
-  body: "suv" | "sedan";
-  /** Paint colour used for the illustration when there is no photo */
-  color: string;
+  /** Photo placed in /public/cars */
+  image: string;
   highlights: string[];
   /** Leave empty to show "Price on request". Example: "₦85,000,000" */
   price?: string;
-  /** Optional photo placed in /public/cars, for example "/cars/range-rover.jpg" */
-  image?: string;
 };
 
 /*
- * SAMPLE LISTINGS. Replace these with the real cars you have in stock,
- * then add the year, mileage and price to the highlights and price fields.
+ * SAMPLE LISTINGS with stock photos. Replace these with the real cars you have
+ * in stock, then add the year, mileage and price.
  */
 export const cars: Car[] = [
-  {
-    id: "range-rover-sport",
-    image: "/cars/range-rover.jpg",
-    make: "Range Rover",
-    model: "Sport",
-    body: "suv",
-    color: "#1f2a24",
-    highlights: ["Luxury SUV", "Automatic", "Workshop inspected"],
-  },
-  {
-    id: "mercedes-gle",
-    image: "/cars/mercedes-gle.jpg",
-    make: "Mercedes-Benz",
-    model: "GLE",
-    body: "suv",
-    color: "#8e959c",
-    highlights: ["Luxury SUV", "Automatic", "Workshop inspected"],
-  },
-  {
-    id: "mercedes-s-class",
-    image: "/cars/mercedes-s-class.jpg",
-    make: "Mercedes-Benz",
-    model: "S-Class",
-    body: "sedan",
-    color: "#14181c",
-    highlights: ["Executive saloon", "Automatic", "Workshop inspected"],
-  },
-  {
-    id: "rolls-royce-ghost",
-    image: "/cars/rolls-royce-ghost.jpg",
-    make: "Rolls-Royce",
-    model: "Ghost",
-    body: "sedan",
-    color: "#e9e6df",
-    highlights: ["Ultra luxury saloon", "Automatic", "Workshop inspected"],
-  },
+  { id: "mercedes-c300", make: "Mercedes-Benz", model: "C300", image: "/cars/mercedes-c300.jpg", highlights: ["Saloon", "Automatic"] },
+  { id: "mercedes-c200", make: "Mercedes-Benz", model: "C200", image: "/cars/mercedes-c200.jpg", highlights: ["Saloon", "Automatic"] },
+  { id: "mercedes-gle", make: "Mercedes-Benz", model: "GLE", image: "/cars/mercedes-gle.jpg", highlights: ["Luxury SUV", "Automatic"] },
+  { id: "mercedes-s-class", make: "Mercedes-Benz", model: "S-Class", image: "/cars/mercedes-s-class.jpg", highlights: ["Executive saloon", "Automatic"] },
+  { id: "range-rover-sport", make: "Range Rover", model: "Sport", image: "/cars/range-rover.jpg", highlights: ["Luxury SUV", "Automatic"] },
+  { id: "rolls-royce-ghost", make: "Rolls-Royce", model: "Ghost", image: "/cars/rolls-royce-ghost.jpg", highlights: ["Ultra luxury saloon", "Automatic"] },
 ];
 
 export const faqs = [
@@ -221,7 +208,7 @@ export const faqs = [
   },
   {
     q: "How do I buy parts from the marketplace?",
-    a: "Add the parts you need to your enquiry list and send it to us. We confirm the price, availability and the exact fit for your car before you pay.",
+    a: "Pick a category, add the parts you need to your enquiry list and send it to us on WhatsApp or by email. We confirm the price, availability and the exact fit for your car before you pay.",
   },
   {
     q: "Do you use genuine spare parts?",

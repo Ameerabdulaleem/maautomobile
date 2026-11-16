@@ -7,7 +7,7 @@ import BrandCarousel from "@/components/BrandCarousel";
 import Faq from "@/components/Faq";
 import Process from "@/components/Process";
 import WhatsAppButton from "@/components/WhatsAppButton";
-import { Cars, Founder, Services, WhyUs } from "@/components/Sections";
+import { Founder, Services, WhyUs } from "@/components/Sections";
 
 export default function Home() {
   return (
@@ -26,7 +26,6 @@ export default function Home() {
         <Process />
         <Marketplace />
         <WhyUs />
-        <Cars />
         <Founder />
         <Faq />
         <Contact />
