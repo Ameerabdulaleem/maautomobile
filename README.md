@@ -23,7 +23,7 @@ Everything you are likely to change lives in two files:
 | Company name, address, email | `src/lib/site.ts` |
 | Founder story and photo | `Founder` in `src/components/Sections.tsx` |
 
-To show a real photo for a part or a car, place the image in `public/parts` or `public/cars` and set the `image` field on that entry, for example `image: "/cars/range-rover.jpg"`. To show a price, fill in the `price` field.
+To show a real photo for a part or a car, place the image in `public/parts` or `public/cars` and set the `image` field on that entry, for example `image: "/cars/range-rover.jpg"`. Prices are in naira. Set `price` for the current price and `oldPrice` for the crossed out previous price. The prices in the file are placeholders, so replace them with your real figures.
 
 ## Deploying on Vercel
 

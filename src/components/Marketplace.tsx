@@ -6,8 +6,38 @@ import Image from "next/image";
 import { useState } from "react";
 import Reveal from "./Reveal";
 import { SectionHeading } from "./Sections";
-import { cars, partCategories, parts, type PartCategory } from "@/lib/data";
+import { cars, naira, partCategories, parts, type PartCategory } from "@/lib/data";
 import { mailto, site, whatsapp } from "@/lib/site";
+
+function Price({
+  price,
+  oldPrice,
+  from,
+  light = false,
+  large = false,
+}: {
+  price?: number;
+  oldPrice?: number;
+  from?: boolean;
+  light?: boolean;
+  large?: boolean;
+}) {
+  if (!price) return <span className="font-display font-semibold">Price on request</span>;
+  return (
+    <span className="inline-flex flex-wrap items-baseline gap-x-2 whitespace-nowrap">
+      {from && <span className={`text-xs font-medium ${light ? "text-white/70" : "text-ink/55"}`}>From</span>}
+      <span className={`font-display font-bold ${large ? "text-xl" : "text-lg"} ${light ? "text-white" : "text-brand-700"}`}>
+        {naira(price)}
+      </span>
+      {oldPrice && oldPrice > price && (
+        <s className={`text-sm font-medium ${light ? "text-white/60" : "text-ink/45"}`}>
+          <span className="sr-only">Previous price </span>
+          {naira(oldPrice)}
+        </s>
+      )}
+    </span>
+  );
+}
 
 function GroupTitle({ id, title, text }: { id: string; title: string; text: string }) {
   return (
@@ -21,6 +51,12 @@ function GroupTitle({ id, title, text }: { id: string; title: string; text: stri
   );
 }
 
+/** The cheapest priced item in a category, used for the "From" price on its picture tile. */
+function lowest(category: PartCategory) {
+  const priced = parts.filter((p) => p.category === category && p.price).sort((a, b) => a.price! - b.price!);
+  return { price: priced[0]?.price, oldPrice: priced[0]?.oldPrice };
+}
+
 export default function Marketplace() {
   const [selectedCar, setSelectedCar] = useState<string>(cars[0].id);
   const [category, setCategory] = useState<PartCategory>(partCategories[0].name);
@@ -30,6 +66,7 @@ export default function Marketplace() {
   const visibleParts = parts.filter((p) => p.category === category);
   const items = parts.filter((p) => basket[p.id]);
   const count = items.reduce((sum, p) => sum + basket[p.id], 0);
+  const total = items.reduce((sum, p) => sum + (p.price ?? 0) * basket[p.id], 0);
 
   const change = (id: string, delta: number) =>
     setBasket((prev) => {
@@ -40,8 +77,8 @@ export default function Marketplace() {
       return next;
     });
 
-  const enquiryText = `Hello ${site.name},\n\nI would like the price and availability of these items:\n\n${items
-    .map((p) => `- ${p.name} x ${basket[p.id]}`)
+  const enquiryText = `Hello ${site.name},\n\nI would like to order these items, please confirm availability:\n\n${items
+    .map((p) => `- ${p.name} x ${basket[p.id]}${p.price ? ` (${p.from ? "from " : ""}${naira(p.price)} each)` : ""}`)
     .join("\n")}\n\nMy car (make, model, year):\nMy name:\n`;
 
   return (
@@ -58,7 +95,7 @@ export default function Marketplace() {
           <GroupTitle
             id="cars-title"
             title="Cars Available For Sale"
-            text="Select a car to see it, then enquire for the price and a viewing."
+            text="Select a car, then enquire to arrange a viewing."
           />
           <ul className="mt-8 grid gap-6 sm:grid-cols-2 lg:grid-cols-3" aria-labelledby="cars-title">
             {cars.map((car, i) => {
@@ -89,6 +126,9 @@ export default function Marketplace() {
                       <span className="absolute bottom-4 left-5 text-left">
                         <span className="block text-xs font-semibold tracking-[0.18em] text-brand-300 uppercase">{car.make}</span>
                         <span className="block font-display text-2xl font-semibold text-white">{name}</span>
+                        <span className="mt-1 block">
+                          <Price price={car.price} oldPrice={car.oldPrice} light large />
+                        </span>
                       </span>
                       <span
                         className={`absolute top-4 right-4 grid size-8 place-items-center rounded-full border-2 transition ${
@@ -100,13 +140,10 @@ export default function Marketplace() {
                       </span>
                     </button>
                     <div className="flex flex-1 flex-wrap items-center justify-between gap-3 p-5">
-                      <div>
-                        <p className="font-display font-semibold">{car.price ?? "Price on request"}</p>
-                        <p className="mt-0.5 text-sm text-ink/60">{car.highlights.join(" · ")}</p>
-                      </div>
+                      <p className="text-sm text-ink/60">{car.highlights.join(" · ")}</p>
                       <a
                         href={whatsapp(
-                          `Hello ${site.name}, I am interested in the ${name} on your website. Please send me the price, year, mileage and viewing details.`,
+                          `Hello ${site.name}, I am interested in the ${name}${car.price ? ` listed at ${naira(car.price)}` : ""} on your website. Please send me the year, mileage and viewing details.`,
                         )}
                         target="_blank"
                         rel="noopener noreferrer"
@@ -170,6 +207,9 @@ export default function Marketplace() {
                         {c.name}
                       </span>
                       <span className="mt-1 hidden text-sm leading-snug text-white/75 sm:block">{c.blurb}</span>
+                      <span className="mt-2 block">
+                        <Price {...lowest(c.name)} from light />
+                      </span>
                     </span>
                   </button>
                 </Reveal>
@@ -197,7 +237,7 @@ export default function Marketplace() {
                       <p className="mt-2 text-[15px] leading-relaxed text-ink/65">{part.description}</p>
                     </div>
                     <div className="flex shrink-0 items-center justify-between gap-4 sm:flex-col sm:items-end">
-                      <p className="font-display text-sm font-semibold whitespace-nowrap">{part.price ?? "Price on request"}</p>
+                      <Price price={part.price} oldPrice={part.oldPrice} from={part.from} />
                       <button
                         type="button"
                         onClick={() => change(part.id, 1)}
@@ -289,7 +329,9 @@ export default function Marketplace() {
                   <li key={p.id} className="flex items-center gap-3 rounded-2xl border border-ink/10 p-4">
                     <div className="min-w-0 flex-1">
                       <p className="truncate font-semibold">{p.name}</p>
-                      <p className="text-sm text-ink/60">{p.price ?? "Price on request"}</p>
+                      <p className="text-sm text-ink/60">
+                        {p.price ? `${p.from ? "From " : ""}${naira(p.price)}` : "Price on request"}
+                      </p>
                     </div>
                     <div className="flex items-center gap-1 rounded-full bg-mist p-1">
                       <button
@@ -323,8 +365,14 @@ export default function Marketplace() {
               </ul>
 
               <div className="border-t border-ink/10 px-6 py-5">
+                {total > 0 && (
+                  <p className="mb-3 flex items-baseline justify-between font-display font-semibold">
+                    <span>Estimated total</span>
+                    <span className="text-xl text-brand-700">{naira(total)}</span>
+                  </p>
+                )}
                 <p className="text-sm leading-relaxed text-ink/60">
-                  Send your list on WhatsApp or by email. We reply with prices and availability.
+                  Send your list on WhatsApp or by email. We confirm availability and the final price for your car.
                 </p>
                 <a
                   href={items.length ? whatsapp(enquiryText) : undefined}

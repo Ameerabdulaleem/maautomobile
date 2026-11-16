@@ -106,13 +106,25 @@ export type Part = {
   category: PartCategory;
   fits: string;
   description: string;
-  /** Leave empty to show "Price on request". Example: "₦25,000" */
-  price?: string;
+  /** Current price in naira. Leave out to show "Price on request". */
+  price?: number;
+  /** Previous price in naira, shown crossed out. Only use a price you really charged before. */
+  oldPrice?: number;
+  /** Shows "From" before the price, for items whose price depends on the car. */
+  from?: boolean;
 };
 
+/** Formats a naira amount, for example 20000 becomes "₦20,000". */
+export function naira(amount: number): string {
+  return `₦${amount.toLocaleString("en-US")}`;
+}
+
+/* PLACEHOLDER PRICES. Replace every price and oldPrice below with your real figures. */
 export const parts: Part[] = [
   {
     id: "oil-filter",
+    price: 20000,
+    oldPrice: 25000,
     name: "Oil Filter",
     category: "Oil Filters",
     fits: "Mercedes-Benz, Range Rover and more",
@@ -120,6 +132,9 @@ export const parts: Part[] = [
   },
   {
     id: "engine-oil",
+    price: 65000,
+    oldPrice: 75000,
+    from: true,
     name: "Engine Oil",
     category: "Lubricants",
     fits: "Petrol and diesel engines",
@@ -127,6 +142,8 @@ export const parts: Part[] = [
   },
   {
     id: "transmission-anti-shake",
+    price: 18000,
+    oldPrice: 22000,
     name: "Automatic Transmission Anti-Shake",
     category: "Lubricants",
     fits: "Most automatic gearboxes",
@@ -134,6 +151,9 @@ export const parts: Part[] = [
   },
   {
     id: "used-engine",
+    price: 2500000,
+    oldPrice: 2800000,
+    from: true,
     name: "Used Engine",
     category: "Used Engines",
     fits: "Mercedes-Benz, Range Rover and more",
@@ -141,6 +161,8 @@ export const parts: Part[] = [
   },
   {
     id: "mercedes-welcome-light",
+    price: 25000,
+    oldPrice: 30000,
     name: "Mercedes-Benz Welcome Light",
     category: "Others",
     fits: "Mercedes-Benz",
@@ -148,6 +170,8 @@ export const parts: Part[] = [
   },
   {
     id: "mercedes-emblem",
+    price: 15000,
+    oldPrice: 20000,
     name: "Mercedes-Benz Emblem",
     category: "Others",
     fits: "Mercedes-Benz",
@@ -155,6 +179,8 @@ export const parts: Part[] = [
   },
   {
     id: "land-rover-valve-stem-cap",
+    price: 8000,
+    oldPrice: 10000,
     name: "Land Rover Valve Stem Cap",
     category: "Others",
     fits: "Land Rover and Range Rover",
@@ -162,6 +188,8 @@ export const parts: Part[] = [
   },
   {
     id: "mercedes-valve-stem-caps",
+    price: 8000,
+    oldPrice: 10000,
     name: "Tire Valve Stem Caps Mercedes",
     category: "Others",
     fits: "Mercedes-Benz",
@@ -176,21 +204,23 @@ export type Car = {
   /** Photo placed in /public/cars */
   image: string;
   highlights: string[];
-  /** Leave empty to show "Price on request". Example: "₦85,000,000" */
-  price?: string;
+  /** Current price in naira. Leave out to show "Price on request". */
+  price?: number;
+  /** Previous price in naira, shown crossed out. Only use a price you really charged before. */
+  oldPrice?: number;
 };
 
 /*
  * SAMPLE LISTINGS with stock photos. Replace these with the real cars you have
- * in stock, then add the year, mileage and price.
+ * in stock, then add the year and mileage. The prices are PLACEHOLDERS, replace them too.
  */
 export const cars: Car[] = [
-  { id: "mercedes-c300", make: "Mercedes-Benz", model: "C300", image: "/cars/mercedes-c300.jpg", highlights: ["Saloon", "Automatic"] },
-  { id: "mercedes-c200", make: "Mercedes-Benz", model: "C200", image: "/cars/mercedes-c200.jpg", highlights: ["Saloon", "Automatic"] },
-  { id: "mercedes-gle", make: "Mercedes-Benz", model: "GLE", image: "/cars/mercedes-gle.jpg", highlights: ["Luxury SUV", "Automatic"] },
-  { id: "mercedes-s-class", make: "Mercedes-Benz", model: "S-Class", image: "/cars/mercedes-s-class.jpg", highlights: ["Executive saloon", "Automatic"] },
-  { id: "range-rover-sport", make: "Range Rover", model: "Sport", image: "/cars/range-rover.jpg", highlights: ["Luxury SUV", "Automatic"] },
-  { id: "rolls-royce-ghost", make: "Rolls-Royce", model: "Ghost", image: "/cars/rolls-royce-ghost.jpg", highlights: ["Ultra luxury saloon", "Automatic"] },
+  { id: "mercedes-c300", price: 28000000, oldPrice: 30000000, make: "Mercedes-Benz", model: "C300", image: "/cars/mercedes-c300.jpg", highlights: ["Saloon", "Automatic"] },
+  { id: "mercedes-c200", price: 22000000, oldPrice: 24000000, make: "Mercedes-Benz", model: "C200", image: "/cars/mercedes-c200.jpg", highlights: ["Saloon", "Automatic"] },
+  { id: "mercedes-gle", price: 65000000, oldPrice: 70000000, make: "Mercedes-Benz", model: "GLE", image: "/cars/mercedes-gle.jpg", highlights: ["Luxury SUV", "Automatic"] },
+  { id: "mercedes-s-class", price: 150000000, oldPrice: 160000000, make: "Mercedes-Benz", model: "S-Class", image: "/cars/mercedes-s-class.jpg", highlights: ["Executive saloon", "Automatic"] },
+  { id: "range-rover-sport", price: 85000000, oldPrice: 92000000, make: "Range Rover", model: "Sport", image: "/cars/range-rover.jpg", highlights: ["Luxury SUV", "Automatic"] },
+  { id: "rolls-royce-ghost", price: 350000000, oldPrice: 380000000, make: "Rolls-Royce", model: "Ghost", image: "/cars/rolls-royce-ghost.jpg", highlights: ["Ultra luxury saloon", "Automatic"] },
 ];
 
 export const faqs = [
