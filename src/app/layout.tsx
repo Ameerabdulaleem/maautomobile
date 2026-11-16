@@ -66,6 +66,7 @@ const jsonLd = {
   },
   areaServed: "Abuja",
   description,
+  founder: { "@type": "Person", name: "Muslim Abdulaleem" },
 };
 
 export default function RootLayout({ children }: Readonly<{ children: React.ReactNode }>) {

@@ -73,8 +73,8 @@ export const steps = [
 
 export const reasons = [
   {
-    title: "Specialists, not generalists",
-    text: "Range Rover, Mercedes-Benz and Rolls-Royce are what we work on every day, so we know their common faults well.",
+    title: "Over 20 years of experience",
+    text: "Two decades in the workshop, backed by a diploma in Mechanical Engineering. We solve the faults that others could not.",
   },
   {
     title: "Genuine and quality parts",

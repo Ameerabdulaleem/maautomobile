@@ -144,38 +144,61 @@ export function Founder() {
               <div className="bg-grid absolute inset-0" aria-hidden />
               <span className="relative font-display text-8xl font-semibold tracking-tight text-white/90">MA</span>
               <span className="absolute bottom-6 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
-                Founder and Lead Technician
+                Muslim Abdulaleem, Founder
               </span>
             </div>
           </div>
         </Reveal>
 
         <Reveal from="right">
-          <p className="text-sm font-semibold tracking-[0.2em] text-brand-400 uppercase">About the founder</p>
+          <p className="text-sm font-semibold tracking-[0.2em] text-brand-400 uppercase">Company overview</p>
           <h2 className="mt-3 font-display text-3xl font-semibold tracking-tight sm:text-4xl">
-            Built on a passion for fine cars and honest work
+            A foundation of two decades of mastery
           </h2>
           <div className="mt-6 space-y-4 text-lg leading-relaxed text-white/70">
             <p>
-              {site.name} was founded by Muslim Aleem, a technician whose love for luxury cars grew into a workshop
-              dedicated to looking after them properly.
+              {site.name} (RC: {site.rc}) is the result of over 20 years of unwavering dedication to the art and science
+              of automotive engineering. Founded by Muslim Abdulaleem, the company combines deep practical experience
+              with formal technical education.
             </p>
             <p>
-              He started the company with a simple belief, that owners of Range Rover, Mercedes-Benz and Rolls-Royce
-              cars in Abuja should not have to gamble on who touches their vehicle. They deserve skilled hands, the
-              right tools, genuine parts and the truth about what their car needs.
+              His journey began not in a classroom, but in the workshop as an apprentice. For more than two decades he
+              has worked through every level of the trade, from hands on repairs to managing complex diagnostics for a
+              variety of companies. That has given him a rare understanding of vehicles, from the simplest mechanical
+              parts to the most complex computer systems.
             </p>
             <p>
-              That belief still guides every job in the workshop today, whether it is a quick service, a difficult
-              electrical fault or helping a customer choose their next car.
+              To strengthen that knowledge, he obtained a National Diploma in Mechanical Engineering from the Federal
+              Polytechnic, Nasarawa. The theory behind the practice allows him to engineer solutions, not just perform
+              repairs.
+            </p>
+            <p>
+              Throughout his career he has been the solution when others have failed, quietly building a reputation for
+              diagnosing and fixing problems that baffled larger, more established companies. Today that expertise has
+              a proper home, a branded and well equipped workshop in Mabushi, Abuja.
             </p>
           </div>
-          <figure className="mt-8 rounded-3xl border border-white/10 bg-white/[0.05] p-7">
+
+          <dl className="mt-8 grid gap-4 sm:grid-cols-3">
+            {[
+              { value: "20+", label: "Years of hands on experience" },
+              { value: "ND", label: "Mechanical Engineering, Federal Polytechnic Nasarawa" },
+              { value: "RC", label: `${site.rc}, a registered company` },
+            ].map((fact) => (
+              <div key={fact.value} className="rounded-2xl border border-white/10 bg-white/[0.05] p-5">
+                <dt className="font-display text-3xl font-semibold text-brand-400">{fact.value}</dt>
+                <dd className="mt-1 text-sm leading-snug text-white/65">{fact.label}</dd>
+              </div>
+            ))}
+          </dl>
+
+          <figure className="mt-6 rounded-3xl border border-white/10 bg-white/[0.05] p-7">
             <Quote className="size-7 text-brand-400" />
             <blockquote className="mt-3 font-display text-xl leading-snug text-white">
-              We treat every car as if it were our own, and every customer as someone we want to see again.
+              Street smart experience and academic knowledge, together, are my signature strength. I engineer
+              solutions, not just repairs.
             </blockquote>
-            <figcaption className="mt-4 text-sm text-white/60">Muslim Aleem, Founder</figcaption>
+            <figcaption className="mt-4 text-sm text-white/60">Muslim Abdulaleem, Founder</figcaption>
           </figure>
         </Reveal>
       </div>

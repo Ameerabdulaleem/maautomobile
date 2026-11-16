@@ -12,7 +12,7 @@ const slides = [
     before: "Trusted ",
     accent: "Range Rover",
     after: " Experts",
-    sub: "Specialist repairs and servicing for luxury cars in Mabushi, Abuja.",
+    sub: "Over 20 years of specialist repairs and diagnostics, now in Mabushi, Abuja.",
     image: "/hero/range-rover.jpg",
     alt: "Black Range Rover Sport driving through a city street",
     position: "object-[50%_62%]",
