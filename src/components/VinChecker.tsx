@@ -1,8 +1,9 @@
 "use client";
 
-import { AnimatePresence, motion } from "framer-motion";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { ArrowRight, LoaderCircle, MessageCircle, ScanLine, ShieldCheck } from "lucide-react";
-import { useState, type FormEvent } from "react";
+import Image from "next/image";
+import { useEffect, useState, type FormEvent } from "react";
 import Reveal from "./Reveal";
 import { whatsapp } from "@/lib/site";
 import { normaliseVin, VIN_PATTERN, type VinResult } from "@/lib/vin";
@@ -20,6 +21,83 @@ const labels: [key: keyof VinResult, label: string][] = [
   ["manufacturer", "Manufacturer"],
   ["builtIn", "Built in"],
 ];
+
+const showcase = [
+  { name: "Mercedes-Benz S-Class", src: "/vin/mercedes-s-class.webp", width: 900, height: 450 },
+  { name: "Range Rover Evoque", src: "/vin/range-rover-evoque.webp", width: 900, height: 482 },
+  { name: "Rolls-Royce Ghost", src: "/vin/rolls-royce-ghost.webp", width: 848, height: 500 },
+  { name: "Range Rover Sport", src: "/vin/range-rover-sport.webp", width: 900, height: 528 },
+  { name: "Jaguar XF", src: "/vin/jaguar-xf.webp", width: 900, height: 377 },
+  { name: "Range Rover Velar", src: "/vin/range-rover-velar.webp", width: 900, height: 395 },
+  { name: "Toyota Hilux", src: "/vin/toyota-hilux.webp", width: 900, height: 310 },
+  { name: "Mercedes-Benz GLE", src: "/vin/mercedes-gle.webp", width: 580, height: 349 },
+] as const;
+
+/** Cars that drive in and out under the search bar while no result is showing. */
+function CarShowcase() {
+  const [index, setIndex] = useState(0);
+  const reduce = useReducedMotion();
+  const car = showcase[index];
+
+  useEffect(() => {
+    if (reduce) return;
+    const timer = setInterval(() => setIndex((i) => (i + 1) % showcase.length), 3000);
+    return () => clearInterval(timer);
+  }, [reduce]);
+
+  return (
+    <div className="mt-7 overflow-hidden rounded-3xl bg-gradient-to-b from-mist to-brand-50 px-4 pt-6 pb-5">
+      <p className="text-center text-xs font-semibold tracking-[0.2em] text-ink/50 uppercase">Saloons, SUVs, pickups and more</p>
+      <div className="relative mt-2 h-44 sm:h-56">
+        <div
+          aria-hidden
+          className="absolute inset-x-[12%] bottom-3 h-5 rounded-[50%] bg-ink/25 blur-md sm:bottom-4"
+        />
+        <AnimatePresence initial={false}>
+          <motion.div
+            key={car.src}
+            initial={{ x: "70%", opacity: 0, scale: 0.9 }}
+            animate={{ x: 0, opacity: 1, scale: 1 }}
+            exit={{ x: "-70%", opacity: 0, scale: 0.9 }}
+            transition={{ duration: 0.8, ease: [0.21, 0.6, 0.35, 1] }}
+            className="absolute inset-0 flex items-end justify-center pb-4"
+          >
+            <Image
+              src={car.src}
+              alt={car.name}
+              width={car.width}
+              height={car.height}
+              sizes="(min-width: 1024px) 480px, 90vw"
+              className="max-h-full w-auto max-w-full object-contain drop-shadow-[0_18px_18px_rgba(10,15,12,0.28)]"
+            />
+          </motion.div>
+        </AnimatePresence>
+      </div>
+      <div className="mt-1 flex items-center justify-between gap-4">
+        <AnimatePresence mode="wait" initial={false}>
+          <motion.p
+            key={car.name}
+            initial={{ opacity: 0, y: 8 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: -8 }}
+            transition={{ duration: 0.3 }}
+            className="font-display font-semibold text-ink"
+          >
+            {car.name}
+          </motion.p>
+        </AnimatePresence>
+        <div className="flex items-center gap-1.5" aria-hidden>
+          {showcase.map((item, i) => (
+            <span
+              key={item.src}
+              className={`h-1.5 rounded-full transition-all duration-500 ${i === index ? "w-6 bg-brand-600" : "w-1.5 bg-ink/20"}`}
+            />
+          ))}
+        </div>
+      </div>
+    </div>
+  );
+}
 
 export default function VinChecker() {
   const [vin, setVin] = useState("");
@@ -124,6 +202,8 @@ export default function VinChecker() {
                 <span className={`shrink-0 font-mono ${vin.length === 17 ? "text-brand-700" : ""}`}>{vin.length}/17</span>
               </div>
             </form>
+
+            {!result && <CarShowcase />}
 
             <div aria-live="polite">
               <AnimatePresence mode="wait">
