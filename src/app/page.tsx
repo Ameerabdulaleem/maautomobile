@@ -6,6 +6,7 @@ import Navbar from "@/components/Navbar";
 import BrandCarousel from "@/components/BrandCarousel";
 import Faq from "@/components/Faq";
 import Process from "@/components/Process";
+import VinChecker from "@/components/VinChecker";
 import WhatsAppButton from "@/components/WhatsAppButton";
 import { Founder, Services, WhyUs } from "@/components/Sections";
 
@@ -24,6 +25,7 @@ export default function Home() {
         <BrandCarousel />
         <Services />
         <Process />
+        <VinChecker />
         <Marketplace />
         <WhyUs />
         <Founder />

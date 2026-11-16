@@ -31,9 +31,8 @@ export const site = {
 export const navLinks = [
   { href: "#services", label: "Services" },
   { href: "#process", label: "How It Works" },
+  { href: "#vin-check", label: "Free VIN Check" },
   { href: "#marketplace", label: "Market-Place" },
-  { href: "#cars", label: "Cars For Sale" },
-  { href: "#parts", label: "Parts & Oils" },
   { href: "#founder", label: "Founder" },
   { href: "#contact", label: "Contact" },
 ] as const;

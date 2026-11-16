@@ -74,7 +74,7 @@ export const steps = [
 export const reasons = [
   {
     title: "Over 20 years of experience",
-    text: "Two decades in the workshop, backed by a diploma in Mechanical Engineering. We solve the faults that others could not.",
+    text: "Two decades of professional practice, backed by formal training in Mechanical Engineering. We resolve the faults that others could not.",
   },
   {
     title: "Genuine and quality parts",

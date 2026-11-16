@@ -144,7 +144,7 @@ export function Founder() {
               <div className="bg-grid absolute inset-0" aria-hidden />
               <span className="relative font-display text-8xl font-semibold tracking-tight text-white/90">MA</span>
               <span className="absolute bottom-6 rounded-full bg-white/10 px-4 py-1.5 text-xs font-medium tracking-wide text-white/80 backdrop-blur">
-                Muslim Abdulaleem, Founder
+                Muslim Abdulaleem, Founder and CEO
               </span>
             </div>
           </div>
@@ -157,36 +157,35 @@ export function Founder() {
           </h2>
           <div className="mt-6 space-y-4 text-lg leading-relaxed text-white/70">
             <p>
-              {site.name} (RC: {site.rc}) is the result of over 20 years of unwavering dedication to the art and science
-              of automotive engineering. Founded by Muslim Abdulaleem, the company combines deep practical experience
-              with formal technical education.
+              {site.name} is built on more than 20 years of dedication to the art and science of automotive
+              engineering. Founded by Muslim Abdulaleem, the company brings together extensive practical experience
+              and formal engineering training.
             </p>
             <p>
-              His journey began not in a classroom, but in the workshop as an apprentice. For more than two decades he
-              has worked through every level of the trade, from hands on repairs to managing complex diagnostics for a
-              variety of companies. That has given him a rare understanding of vehicles, from the simplest mechanical
-              parts to the most complex computer systems.
+              Over two decades, our founder has worked at every level of the profession, from precision mechanical
+              repair to leading advanced diagnostics for a range of organisations. The result is a complete
+              understanding of the modern vehicle, from core mechanical components to the most sophisticated
+              electronic control systems.
             </p>
             <p>
-              To strengthen that knowledge, he obtained a National Diploma in Mechanical Engineering from the Federal
-              Polytechnic, Nasarawa. The theory behind the practice allows him to engineer solutions, not just perform
-              repairs.
+              That experience is reinforced by a professional qualification in Mechanical Engineering, which provides
+              the theoretical framework to engineer lasting solutions and not simply carry out repairs.
             </p>
             <p>
-              Throughout his career he has been the solution when others have failed, quietly building a reputation for
-              diagnosing and fixing problems that baffled larger, more established companies. Today that expertise has
-              a proper home, a branded and well equipped workshop in Mabushi, Abuja.
+              Our reputation rests on resolving the complex faults that others could not. Today that expertise is
+              delivered through a fully equipped facility, with the standards of care, transparency and precision that
+              owners of premium vehicles expect anywhere in the world.
             </p>
           </div>
 
           <dl className="mt-8 grid gap-4 sm:grid-cols-3">
             {[
-              { value: "20+", label: "Years of hands on experience" },
-              { value: "ND", label: "Mechanical Engineering, Federal Polytechnic Nasarawa" },
-              { value: "RC", label: `${site.rc}, a registered company` },
+              { value: "20+", label: "Years of professional experience" },
+              { value: "Engineer led", label: "Qualified in Mechanical Engineering" },
+              { value: "Registered", label: `Incorporated company, RC ${site.rc}` },
             ].map((fact) => (
               <div key={fact.value} className="rounded-2xl border border-white/10 bg-white/[0.05] p-5">
-                <dt className="font-display text-3xl font-semibold text-brand-400">{fact.value}</dt>
+                <dt className="font-display text-2xl font-semibold text-brand-400">{fact.value}</dt>
                 <dd className="mt-1 text-sm leading-snug text-white/65">{fact.label}</dd>
               </div>
             ))}
@@ -195,10 +194,9 @@ export function Founder() {
           <figure className="mt-6 rounded-3xl border border-white/10 bg-white/[0.05] p-7">
             <Quote className="size-7 text-brand-400" />
             <blockquote className="mt-3 font-display text-xl leading-snug text-white">
-              Street smart experience and academic knowledge, together, are my signature strength. I engineer
-              solutions, not just repairs.
+              Practical mastery and engineering discipline, working together. We engineer solutions, not just repairs.
             </blockquote>
-            <figcaption className="mt-4 text-sm text-white/60">Muslim Abdulaleem, Founder</figcaption>
+            <figcaption className="mt-4 text-sm text-white/60">Muslim Abdulaleem, Founder and Chief Executive</figcaption>
           </figure>
         </Reveal>
       </div>
